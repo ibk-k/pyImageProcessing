@@ -1,5 +1,3 @@
-//#define OPENCV_SUPPORT
-
 #pragma once
 
 #include <optional>
@@ -23,7 +21,7 @@ namespace ImageProcessing
 	{
 	private:
 		//----------------------------------------------------------------------------------------------------
-		//																				private fields
+		//											private fields
 		std::shared_ptr<tag_DCIMG> hdcimg;
 		int32 current_session;
 		int32 height;
@@ -33,12 +31,16 @@ namespace ImageProcessing
 		int32 nframes_in_currentsession;
 		int32 nsessions;
 
+		//----------------------------------------------------------------------------------------------------
+		//										private methods
 	private:
 		std::tuple<int32, int32, int32, int32, int32> get_image_information();
 		int32 get_sessioncount();
 		bool set_session(int32 sessionidx);
 
 
+		//----------------------------------------------------------------------------------------------------
+		//											public methods
 	public:
 		DcimgReader(const std::wstring& filename);
 		DcimgReader(const std::wstring& filename, int32 sessionidx);
@@ -65,8 +67,8 @@ namespace ImageProcessing
 }	//namespace ImageProcessing
 
 
-//–ß‚è’l‚Ì‡”Ô: height, width, rowbytes, pixeltype, nframes
-//æ“¾‚É¸”s‚·‚é‚ÆA0‚ª“ü‚éB
+//æˆ»ã‚Šå€¤ã®é †ç•ª: height, width, rowbytes, pixeltype, nframes
+//å–å¾—ã«å¤±æ•—ã™ã‚‹ã¨ã€0ãŒå…¥ã‚‹ã€‚
 inline std::tuple<int32, int32, int32, int32, int32> ImageProcessing::DcimgReader::get_image_information()
 {
 	DCIMG_ERR err;
@@ -167,13 +169,13 @@ inline bool ImageProcessing::DcimgReader::set_session(int32 sessionidx)
 
 
 //-----------------------------------------------------------------------------------------------------
-//																				Constructor
+//											Constructor
 //@param	filename
 inline ImageProcessing::DcimgReader::DcimgReader(const std::wstring& filename) : DcimgReader(filename, 0) {}
 
 
 //-----------------------------------------------------------------------------------------------------
-//																				Constructor
+//											Constructor
 //@param	filename
 //@param	sessionidx
 inline ImageProcessing::DcimgReader::DcimgReader(const std::wstring& filename, int32 sessionidx)
@@ -190,14 +192,14 @@ inline ImageProcessing::DcimgReader::DcimgReader(const std::wstring& filename, i
 
 
 //-----------------------------------------------------------------------------------------------------
-//																				Set session index
+//										Set session index
 //@param	sessionidx
 inline void ImageProcessing::DcimgReader::SetCurrentSession(int32 sessionidx)
 {
 	current_session = sessionidx;
 	set_session(sessionidx);
 
-	//V‚µ‚¢ƒZƒbƒVƒ‡ƒ“‚Ìî•ñ‚ÉXV
+	//æ–°ã—ã„ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®æƒ…å ±ã«æ›´æ–°
 	auto inf = get_image_information();
 
 	height = std::get<0>(inf);
@@ -209,7 +211,7 @@ inline void ImageProcessing::DcimgReader::SetCurrentSession(int32 sessionidx)
 
 
 //----------------------------------------------------------------------------------------------------
-//														returns number of sessions this dcimg file has
+//							returns number of sessions in this dcimg file
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetNumberOfSessions() const
 {
@@ -218,7 +220,7 @@ inline int32 ImageProcessing::DcimgReader::GetNumberOfSessions() const
 
 
 //----------------------------------------------------------------------------------------------------
-//																		returns current session index
+//									returns current session index
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetCurrentSession() const
 {
@@ -227,7 +229,7 @@ inline int32 ImageProcessing::DcimgReader::GetCurrentSession() const
 
 
 //----------------------------------------------------------------------------------------------------
-//																		returns height of the images
+//									returns height of the images
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetHeight() const
 {
@@ -236,7 +238,7 @@ inline int32 ImageProcessing::DcimgReader::GetHeight() const
 
 
 //----------------------------------------------------------------------------------------------------
-//																		returns width of the images
+//									returns width of the images
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetWidth() const
 {
@@ -245,7 +247,7 @@ inline int32 ImageProcessing::DcimgReader::GetWidth() const
 
 
 //----------------------------------------------------------------------------------------------------
-//																	returns the byte size of a row
+//									returns the byte size of a row
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetRowBytes() const
 {
@@ -254,7 +256,7 @@ inline int32 ImageProcessing::DcimgReader::GetRowBytes() const
 
 
 //----------------------------------------------------------------------------------------------------
-//																	returns the bit size per pixel
+//									returns the bit size per pixel
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetBitsPerPixel() const
 {
@@ -263,7 +265,7 @@ inline int32 ImageProcessing::DcimgReader::GetBitsPerPixel() const
 
 
 //----------------------------------------------------------------------------------------------------
-//												returns the number of frames in the current session
+//						returns the number of frames in the current session
 //@return	int32
 inline int32 ImageProcessing::DcimgReader::GetNumberOfFrames() const
 {
@@ -272,7 +274,7 @@ inline int32 ImageProcessing::DcimgReader::GetNumberOfFrames() const
 
 
 //----------------------------------------------------------------------------------------------------
-//															returns timestamps in the current session
+//							returns timestamps in the current session
 //@return	std::optional<std::vector<double>>
 inline std::optional<std::vector<double>> ImageProcessing::DcimgReader::GetTimeStamp() const
 {
@@ -303,7 +305,7 @@ inline std::optional<std::vector<double>> ImageProcessing::DcimgReader::GetTimeS
 	}
 	else if (block.timestampvalidsize < sizeof(timestamps[0]))
 	{
-		printf("dcimg_copymetadatablock(DCIMG_TIMESTAMPBLOCK) returns unknown time stamp that size is %d bytes. This is smaller than expected.\n", block.timestampvalidsize);
+		printf("time stamp size is unknown (%d bytes). This is smaller than expected.\n", block.timestampvalidsize);
 		return std::nullopt;
 	}
 	else
@@ -325,7 +327,7 @@ inline std::optional<std::vector<double>> ImageProcessing::DcimgReader::GetTimeS
 
 
 //----------------------------------------------------------------------------------------------------
-//															returns an 8bit image pointer of the index
+//							returns an 8bit image pointer of the index
 //return	std::unique_ptr<unsigned char[]>
 inline std::unique_ptr<unsigned char[]> ImageProcessing::DcimgReader::ReadFrame(size_t index)
 {
@@ -334,7 +336,7 @@ inline std::unique_ptr<unsigned char[]> ImageProcessing::DcimgReader::ReadFrame(
 
 
 //----------------------------------------------------------------------------------------------------
-//													returns 8bit images pointer between start and stop
+//						returns 8bit images pointer between start and stop
 //return	std::unique_ptr<unsigned char[]>
 inline std::unique_ptr<unsigned char[]> ImageProcessing::DcimgReader::ReadFrames(size_t start, size_t stop)
 {
@@ -342,8 +344,8 @@ inline std::unique_ptr<unsigned char[]> ImageProcessing::DcimgReader::ReadFrames
 
 	if (stop > nframes_in_currentsession)
 	{
-		printf("Number of frame in the specified session is %d.\n", nframes_in_currentsession);
-		printf("But frame index specified in the argument was %zd so it was out of range.\n", stop);
+		printf("Number of frame in this session is %d.\n", nframes_in_currentsession);
+		printf("%zd is out of range!\n", stop);
 		return nullptr;
 	}
 
@@ -387,7 +389,7 @@ inline std::unique_ptr<unsigned char[]> ImageProcessing::DcimgReader::ReadFrames
 
 
 //----------------------------------------------------------------------------------------------------
-//																returns an 16bit image of the index
+//								returns an 16bit image of the index
 //@return	std::unique_ptr<unsigned short[]>
 inline std::unique_ptr<unsigned short[]> ImageProcessing::DcimgReader::ReadFrameMONO16(size_t index)
 {
@@ -396,7 +398,7 @@ inline std::unique_ptr<unsigned short[]> ImageProcessing::DcimgReader::ReadFrame
 
 
 //----------------------------------------------------------------------------------------------------
-//														returns 16bit images between start and stop
+//							returns 16bit images between start and stop
 //@return	std::unique_ptr<unsigned short[]>
 inline std::unique_ptr<unsigned short[]> ImageProcessing::DcimgReader::ReadFramesMONO16(size_t start, size_t stop)
 {
@@ -415,8 +417,8 @@ inline std::unique_ptr<unsigned short[]> ImageProcessing::DcimgReader::ReadFrame
 
 #ifdef OPENCV_SUPPORT
 //----------------------------------------------------------------------------------------------------
-//																returns cv::Mat image of the index.
-//																requires to define OPENCV_SUPPORT.
+//								returns cv::Mat image of the index.
+//								requires to define OPENCV_SUPPORT.
 //@param	index
 //
 //@return	std::optional<cv::Mat>
@@ -426,8 +428,8 @@ inline std::optional<cv::Mat> ImageProcessing::DcimgReader::ReadCvFrame(size_t i
 
 	if (index > nframes_in_currentsession)
 	{
-		printf("Number of frame in the specified session is %d.\n", nframes_in_currentsession);
-		printf("But frame index specified in the argument was %zd so it was out of range.\n", index);
+		printf("Number of frame in this session is %d.\n", nframes_in_currentsession);
+		printf("%zd is out of range!\n", index);
 		return std::nullopt;
 	}
 
@@ -476,8 +478,8 @@ inline std::optional<std::vector<cv::Mat>> ImageProcessing::DcimgReader::ReadCvF
 
 	if (stop > nframes_in_currentsession)
 	{
-		printf("Number of frame in the specified session is %d.\n", nframes_in_currentsession);
-		printf("But frame index specified in the argument was %zd so it was out of range.\n", stop);
+		printf("Number of frame in this session is %d.\n", nframes_in_currentsession);
+		printf("%zd is out of range!\n", stop);
 		return std::nullopt;
 	}
 
