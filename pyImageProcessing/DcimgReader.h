@@ -466,8 +466,8 @@ inline std::optional<cv::Mat> ImageProcessing::DcimgReader::ReadCvFrame(size_t i
 
 
 //----------------------------------------------------------------------------------------------------
-//													returns cv::Mat images between start and stop.
-//													requires to define OPENCV_SUPPORT.
+//							returns cv::Mat images between start and stop.
+//							requires to define OPENCV_SUPPORT.
 //@param	start
 //@param	stop
 //
