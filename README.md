@@ -1,5 +1,5 @@
 # pyImageProcessing
-This module provides DcimgReader class to read Hamamatsu dcimg files.
+This module provides DcimgReader class to read Hamamatsu dcimg files. This is a wrapper class for DCIMG-API
 
 ## Dependencies
 - DCAM-API
