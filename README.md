@@ -30,7 +30,7 @@ array([[1723, 1667, 1677, ..., 1719, 1729, 1750],
        [1664, 1640, 1691, ..., 1718, 1756, 1707]], dtype=uint16)
  ```
  
- To read all frames, use `read_frames`.
+ To read all frames, use `read_frames(start, stop)`.
  ```python
  >>> all_frames = img_file.read_frames(0, img_file.number_of_frames)
  >>> all_frames
@@ -63,3 +63,13 @@ To get timestamps, use `get_timestamp()`.
  ...]
  ```
 
+This module provides another properties / functions below
+|Property name|Description|
+|:---|:---|
+|current_session|get or set a session.|
+|number_of_sessions|get number of sessions in the dcimg file.|
+|height|get height of the image|
+|width|get width of the image|
+|row_bytes|get rowbytes of the image|
+|bits_per_pixel|get bits per pixel of the image|
+|number_of_frames|get number of frames in current session|
