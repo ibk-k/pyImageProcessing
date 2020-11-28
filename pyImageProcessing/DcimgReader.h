@@ -305,7 +305,7 @@ inline std::optional<std::vector<double>> ImageProcessing::DcimgReader::GetTimeS
 	}
 	else if (block.timestampvalidsize < sizeof(timestamps[0]))
 	{
-		printf("time stamp size is unknown (%d bytes). This is smaller than expected.\n", block.timestampvalidsize);
+		printf("Time stamp size is unknown (%d bytes). This is smaller than expected.\n", block.timestampvalidsize);
 		return std::nullopt;
 	}
 	else

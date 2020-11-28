@@ -112,7 +112,7 @@ py::array pyDcimgReader::ReadFrames(size_t start, size_t stop)
 
 PYBIND11_MODULE(pyImageProcessing, m)
 {
-	m.doc() = "Python Binding for C++ ImageProcessing Library";
+	m.doc() = "Python Binding of C++ ImageProcessing Library";
 	py::class_<pyDcimgReader>(m, "DcimgReader")
 		.def(py::init<const std::wstring&>())
 		.def(py::init<const std::wstring&, int32>())
