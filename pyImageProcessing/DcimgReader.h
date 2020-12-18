@@ -6,6 +6,7 @@
 #include <tuple>
 #include <vector>
 #include <iostream>
+#include <type_traits>
 #include "console_dcimg.h"
 #include "common_dcimg.h"
 #include "dcimgapi.h"
@@ -22,7 +23,7 @@ namespace ImageProcessing
 	private:
 		//----------------------------------------------------------------------------------------------------
 		//											private fields
-		std::shared_ptr<tag_DCIMG> hdcimg;
+		std::shared_ptr<std::remove_pointer<HDCIMG>::type> hdcimg;
 		int32 current_session;
 		int32 height;
 		int32 width;
