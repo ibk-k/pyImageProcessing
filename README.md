@@ -6,8 +6,9 @@ This module provides DcimgReader class to read Hamamatsu dcimg files. This is a 
 - DCIMG-SDK (This module uses console_dcimg.h, common_dcimg.h and common_dcimg.cpp in the samples)
 - pybind11
 
-## Requirements
-- C++/20 is needed to build this module.
+## Build
+- Microsoft Visual Studio Community 2019
+- C++/17 is needed to build this module.
 
 ## Documentation
 DcimgReader class represents a dcimg file.
