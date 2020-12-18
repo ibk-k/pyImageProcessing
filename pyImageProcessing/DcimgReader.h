@@ -179,10 +179,9 @@ inline ImageProcessing::DcimgReader::DcimgReader(const std::wstring& filename) :
 //											Constructor
 //@param	filename
 //@param	sessionidx
-inline ImageProcessing::DcimgReader::DcimgReader(const std::wstring& filename, int32 sessionidx)
+inline ImageProcessing::DcimgReader::DcimgReader(const std::wstring& filename, int32 sessionidx) :
+	hdcimg(dcimgcon_init_open(filename.c_str()), dcimg_close)
 {
-	hdcimg = std::shared_ptr<std::remove_pointer<HDCIMG>::type>(dcimgcon_init_open(filename.c_str()), dcimg_close);
-
 	int32 sessions = get_sessioncount();
 	if (sessions != -1)
 		nsessions = sessions;
